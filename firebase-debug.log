@@ -1,0 +1,31 @@
+[debug] [2025-06-01T18:33:29.240Z] ----------------------------------------------------------------------
+[debug] [2025-06-01T18:33:29.244Z] Command:       C:\Program Files\nodejs\node.exe C:\Users\masar\AppData\Roaming\npm\node_modules\firebase-tools\lib\bin\firebase.js deploy --only functions --debug
+[debug] [2025-06-01T18:33:29.245Z] CLI Version:   14.5.1
+[debug] [2025-06-01T18:33:29.245Z] Platform:      win32
+[debug] [2025-06-01T18:33:29.245Z] Node Version:  v22.15.1
+[debug] [2025-06-01T18:33:29.245Z] Time:          Sun Jun 01 2025 20:33:29 GMT+0200 (South Africa Standard Time)
+[debug] [2025-06-01T18:33:29.245Z] ----------------------------------------------------------------------
+[debug] 
+[debug] [2025-06-01T18:33:29.529Z] > command requires scopes: ["email","openid","https://www.googleapis.com/auth/cloudplatformprojects.readonly","https://www.googleapis.com/auth/firebase","https://www.googleapis.com/auth/cloud-platform"]
+[debug] [2025-06-01T18:33:29.531Z] > authorizing via signed-in user (maseeareington@gmail.com)
+[debug] [2025-06-01T18:33:29.531Z] [iam] checking project jessie-the-bot for permissions ["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]
+[debug] [2025-06-01T18:33:29.533Z] Checked if tokens are valid: true, expires at: 1748804763764
+[debug] [2025-06-01T18:33:29.533Z] Checked if tokens are valid: true, expires at: 1748804763764
+[debug] [2025-06-01T18:33:29.535Z] >>> [apiv2][query] POST https://cloudresourcemanager.googleapis.com/v1/projects/jessie-the-bot:testIamPermissions [none]
+[debug] [2025-06-01T18:33:29.536Z] >>> [apiv2][(partial)header] POST https://cloudresourcemanager.googleapis.com/v1/projects/jessie-the-bot:testIamPermissions x-goog-quota-user=projects/jessie-the-bot
+[debug] [2025-06-01T18:33:29.536Z] >>> [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/jessie-the-bot:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-06-01T18:33:31.721Z] <<< [apiv2][status] POST https://cloudresourcemanager.googleapis.com/v1/projects/jessie-the-bot:testIamPermissions 200
+[debug] [2025-06-01T18:33:31.722Z] <<< [apiv2][body] POST https://cloudresourcemanager.googleapis.com/v1/projects/jessie-the-bot:testIamPermissions {"permissions":["cloudfunctions.functions.create","cloudfunctions.functions.delete","cloudfunctions.functions.get","cloudfunctions.functions.list","cloudfunctions.functions.update","cloudfunctions.operations.get","firebase.projects.get"]}
+[debug] [2025-06-01T18:33:31.724Z] Checked if tokens are valid: true, expires at: 1748804763764
+[debug] [2025-06-01T18:33:31.724Z] Checked if tokens are valid: true, expires at: 1748804763764
+[debug] [2025-06-01T18:33:31.725Z] >>> [apiv2][query] POST https://iam.googleapis.com/v1/projects/jessie-the-bot/serviceAccounts/jessie-the-bot@appspot.gserviceaccount.com:testIamPermissions [none]
+[debug] [2025-06-01T18:33:31.726Z] >>> [apiv2][body] POST https://iam.googleapis.com/v1/projects/jessie-the-bot/serviceAccounts/jessie-the-bot@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[debug] [2025-06-01T18:33:33.564Z] <<< [apiv2][status] POST https://iam.googleapis.com/v1/projects/jessie-the-bot/serviceAccounts/jessie-the-bot@appspot.gserviceaccount.com:testIamPermissions 200
+[debug] [2025-06-01T18:33:33.565Z] <<< [apiv2][body] POST https://iam.googleapis.com/v1/projects/jessie-the-bot/serviceAccounts/jessie-the-bot@appspot.gserviceaccount.com:testIamPermissions {"permissions":["iam.serviceAccounts.actAs"]}
+[info] 
+[info] === Deploying to 'jessie-the-bot'...
+[info] 
+[info] i  deploying functions 
+[info] Running command: npm --prefix "$RESOURCE_DIR" run lint
+[error] 
+[error] Error: functions predeploy error: Command terminated with non-zero exit code 1
