@@ -1,0 +1,7 @@
+<?xml version='1.0' encoding='utf-8'?>
+<resources>
+    <string name="app_name">Chat Bot by King_Masee</string>
+    <string name="title_activity_main">Chat Bot by King_Masee</string>
+    <string name="package_name">com.kingmasee.chatbot</string>
+    <string name="custom_url_scheme">com.kingmasee.chatbot</string>
+</resources>

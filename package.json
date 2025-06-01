@@ -1,0 +1,22 @@
+{
+  "name": "chatbot-app",
+  "version": "1.0.0",
+  "description": "Chat Bot by King_Masee",
+  "main": "index.html",
+  "scripts": {
+    "start": "live-server www",
+    "build": "echo 'Add your build steps here'",
+    "cap:sync": "npx cap sync",
+    "cap:copy": "npx cap copy",
+    "cap:open": "npx cap open android"
+  },
+  "author": "King_Masee",
+  "license": "MIT",
+  "dependencies": {
+    "@capacitor/android": "^5.0.0",
+    "@capacitor/core": "^5.0.0"
+  },
+  "devDependencies": {
+    "live-server": "^1.2.0"
+  }
+}
