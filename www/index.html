@@ -180,6 +180,45 @@
     </div>
   </div>
 
+<<<<<<< HEAD
+=======
+  <!-- Firebase SDK -->
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
+    import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
+
+    const firebaseConfig = {
+<<<<<<< HEAD
+=======
+      apiKey: ""; // ✅ Now safe
+>>>>>>> 5469391c897ccbb395fc6572e7cbae623dae0ff9
+      authDomain: "jessie-the-bot.firebaseapp.com",
+      projectId: "jessie-the-bot",
+      storageBucket: "jessie-the-bot.firebasestorage.app",
+      messagingSenderId: "1045793443582",
+      appId: "1:1045793443582:web:a8360628ee70b5f3291faf",
+      measurementId: "G-2L8B4MB0SX"
+    };
+
+    const app = initializeApp(firebaseConfig);
+    const db = getFirestore(app);
+
+    window.JessieDB = db;
+    window.JessieAddMessage = async function (role, text) {
+      try {
+        await addDoc(collection(db, "chats"), {
+          role,
+          text,
+          timestamp: serverTimestamp()
+        });
+      } catch (e) {
+        console.error("Firestore error:", e);
+      }
+    };
+  </script>
+
+  <!-- Chatbot Script -->
+>>>>>>> 493cc50df2b06854a778c8fc991054e7ae492953
   <script>
     const chatbox = document.getElementById("chatbox");
     let autoScroll = true;
