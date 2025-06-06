@@ -4,14 +4,22 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Jessie the Bot by King_Masee</title>
+
+  <!-- ✅ PWA META + MANIFEST -->
+  <link rel="manifest" href="/manifest.json" />
+  <meta name="theme-color" content="#000000" />
+  <meta name="apple-mobile-web-app-capable" content="yes">
+  <meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+  <link rel="apple-touch-icon" href="/icon-192.png">
+
   <style>
+    /* Your existing CSS here (unchanged)... */
     body {
       margin: 0;
       font-family: 'Segoe UI', sans-serif;
       background-color: black;
       color: limegreen;
     }
-
     .chatbot {
       max-width: 600px;
       margin: 50px auto;
@@ -19,8 +27,8 @@
       border-radius: 10px;
       background: #111;
       box-shadow: 0 0 15px limegreen;
+      position: relative;
     }
-
     .chatbox {
       height: 400px;
       overflow-y: auto;
@@ -29,17 +37,14 @@
       border-radius: 5px;
       background: #000;
     }
-
     .message {
       margin: 10px 0;
       display: flex;
       align-items: flex-start;
     }
-
     .message.user {
       justify-content: flex-end;
     }
-
     .avatar {
       width: 32px;
       height: 32px;
@@ -52,37 +57,31 @@
       font-weight: bold;
       margin-right: 10px;
     }
-
     .message.user .avatar {
       background: #0f0;
       color: black;
       margin-left: 10px;
       margin-right: 0;
     }
-
     .bubble {
       max-width: 70%;
       padding: 10px;
       background: #222;
       border-radius: 10px;
     }
-
     .message.user .bubble {
       background: #060;
     }
-
     .timestamp {
       font-size: 0.7em;
       color: #ccc;
       margin-top: 5px;
       text-align: right;
     }
-
     .input-area {
       display: flex;
       margin-top: 10px;
     }
-
     .input-area input {
       flex: 1;
       padding: 10px;
@@ -91,7 +90,6 @@
       color: limegreen;
       border-radius: 5px;
     }
-
     .input-area button {
       padding: 10px 20px;
       background: limegreen;
@@ -102,74 +100,111 @@
       border-radius: 5px;
       cursor: pointer;
     }
+    .dropdown {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      display: inline-block;
+    }
+    .dropdown-toggle {
+      background: none;
+      color: limegreen;
+      font-size: 1.5em;
+      border: none;
+      cursor: pointer;
+    }
+    .dropdown-content {
+      display: none;
+      position: absolute;
+      background-color: #111;
+      min-width: 160px;
+      box-shadow: 0 0 10px limegreen;
+      z-index: 1;
+      border-radius: 5px;
+      right: 0;
+      margin-top: 5px;
+    }
+    .dropdown-content button, .dropdown-content select {
+      background: transparent;
+      color: limegreen;
+      border: none;
+      padding: 10px;
+      text-align: left;
+      width: 100%;
+      cursor: pointer;
+      font-size: 1em;
+    }
+    .dropdown-content button:hover, .dropdown-content select:hover {
+      background-color: #222;
+    }
+    .bubble.friendly { background: #28a745; font-family: "Comic Sans MS"; color: #fff; }
+    .bubble.sarcastic { background: #ffcc00; font-family: "Courier New"; color: #222; }
+    .bubble.formal { background: #004080; font-family: "Georgia"; color: #ccf; }
+    .bubble.excited { background: #ff33cc; font-family: "Arial Black"; color: #fff; }
+    .bubble.mysterious { background: #333; font-family: "Lucida Console"; color: #aaa; }
+    .typing-indicator span {
+      animation: blink 1.2s infinite;
+    }
+    .typing-indicator span:nth-child(2) { animation-delay: 0.2s; }
+    .typing-indicator span:nth-child(3) { animation-delay: 0.4s; }
+    @keyframes blink {
+      0%, 80%, 100% { opacity: 0; }
+      40% { opacity: 1; }
+    }
   </style>
 </head>
 <body>
   <div class="chatbot">
     <h2>Jessie the Bot 🤖 by King_Masee</h2>
+
+    <div class="dropdown">
+      <button class="dropdown-toggle">⚙️</button>
+      <div class="dropdown-content">
+        <select id="personality" onchange="changePersonality()">
+          <option value="friendly">Friendly</option>
+          <option value="sarcastic">Sarcastic</option>
+          <option value="formal">Formal</option>
+          <option value="excited">Excited</option>
+          <option value="mysterious">Mysterious</option>
+        </select>
+        <button onclick="toggleScroll()">Toggle Scroll: <span id="scrollStatus">On</span></button>
+        <button onclick="clearChat()">Clear Chat</button>
+      </div>
+    </div>
+
     <div class="chatbox" id="chatbox"></div>
+
     <div class="input-area">
       <input type="text" id="userInput" placeholder="Ask me something..." />
       <button onclick="sendMessage()">Send</button>
     </div>
   </div>
 
-  <!-- Firebase SDK -->
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-app.js";
-    import { getFirestore, addDoc, collection, serverTimestamp } from "https://www.gstatic.com/firebasejs/10.12.2/firebase-firestore.js";
-
-    const firebaseConfig = {
-<<<<<<< HEAD
-=======
-      apiKey: ""; // ✅ Now safe
->>>>>>> 5469391c897ccbb395fc6572e7cbae623dae0ff9
-      authDomain: "jessie-the-bot.firebaseapp.com",
-      projectId: "jessie-the-bot",
-      storageBucket: "jessie-the-bot.firebasestorage.app",
-      messagingSenderId: "1045793443582",
-      appId: "1:1045793443582:web:a8360628ee70b5f3291faf",
-      measurementId: "G-2L8B4MB0SX"
-    };
-
-    const app = initializeApp(firebaseConfig);
-    const db = getFirestore(app);
-
-    window.JessieDB = db;
-    window.JessieAddMessage = async function (role, text) {
-      try {
-        await addDoc(collection(db, "chats"), {
-          role,
-          text,
-          timestamp: serverTimestamp()
-        });
-      } catch (e) {
-        console.error("Firestore error:", e);
-      }
-    };
-  </script>
-
-  <!-- Chatbot Script -->
   <script>
     const chatbox = document.getElementById("chatbox");
+    let autoScroll = true;
+    let personality = "friendly";
+
+    const personalities = {
+      friendly: { emoji: "😊", avatar: "😊", class: "friendly" },
+      sarcastic: { emoji: "🙄", avatar: "😏", class: "sarcastic" },
+      formal: { emoji: "🧐", avatar: "🎓", class: "formal" },
+      excited: { emoji: "🤩", avatar: "😃", class: "excited" },
+      mysterious: { emoji: "🕵️", avatar: "🕵️", class: "mysterious" },
+    };
 
     function escapeHtml(text) {
-      return text.replace(/[&<>"']/g, function (m) {
-        return ({
-          "&": "&amp;",
-          "<": "&lt;",
-          ">": "&gt;",
-          '"': "&quot;",
-          "'": "&#039;"
-        })[m];
-      });
+      return text.replace(/[&<>"']/g, m => ({
+        "&": "&amp;", "<": "&lt;", ">": "&gt;",
+        '"': "&quot;", "'": "&#039;"
+      })[m]);
     }
 
     function scrollChatToBottom() {
-      chatbox.scrollTop = chatbox.scrollHeight;
+      if (autoScroll) chatbox.scrollTop = chatbox.scrollHeight;
     }
 
-    function appendMessage(sender, message, avatar = sender === "user" ? "🧑" : "🤖") {
+    function appendMessage(sender, message, avatar = "🤖", bubbleClass = "") {
       const wrapper = document.createElement("div");
       wrapper.className = `message ${sender}`;
 
@@ -178,7 +213,7 @@
       icon.textContent = avatar;
 
       const bubble = document.createElement("div");
-      bubble.className = "bubble";
+      bubble.className = `bubble ${bubbleClass}`;
       bubble.innerHTML = `
         <div>${escapeHtml(message)}</div>
         <div class="timestamp">${new Date().toLocaleTimeString()}</div>
@@ -187,40 +222,120 @@
       wrapper.append(icon, bubble);
       chatbox.appendChild(wrapper);
       scrollChatToBottom();
-
-      // Save to Firestore
-      if (window.JessieAddMessage) {
-        window.JessieAddMessage(sender, message);
-      }
     }
 
-    function sendMessage() {
+    function animateBotReply(text) {
+      const { avatar, class: bubbleClass, emoji } = personalities[personality];
+      const wrapper = document.createElement("div");
+      wrapper.className = "message bot";
+
+      const icon = document.createElement("div");
+      icon.className = "avatar";
+      icon.textContent = avatar;
+
+      const bubble = document.createElement("div");
+      bubble.className = `bubble ${bubbleClass}`;
+
+      const content = document.createElement("div");
+      const timestamp = document.createElement("div");
+      timestamp.className = "timestamp";
+      timestamp.textContent = new Date().toLocaleTimeString();
+
+      bubble.append(content, timestamp);
+      wrapper.append(icon, bubble);
+      chatbox.appendChild(wrapper);
+      scrollChatToBottom();
+
+      let i = 0;
+      const finalText = `${emoji} ${text.replace(/^\?+/, "")}`;
+      const interval = setInterval(() => {
+        content.textContent = finalText.slice(0, i++);
+        scrollChatToBottom();
+        if (i > finalText.length) clearInterval(interval);
+      }, 30);
+    }
+
+    async function sendMessage() {
       const input = document.getElementById("userInput");
       const text = input.value.trim();
       if (!text) return;
 
-      appendMessage("user", text);
+      appendMessage("user", text, "🧑");
       input.value = "";
 
-      // Basic bot response
-      setTimeout(() => {
-        const botReply = getBotResponse(text);
-        appendMessage("bot", botReply);
-      }, 500);
+      const typingEl = document.createElement("div");
+      typingEl.className = "message bot typing";
+      typingEl.innerHTML = `
+        <div class="avatar">${personalities[personality].avatar}</div>
+        <div class="bubble ${personalities[personality].class}">
+          <span class="typing-indicator">
+            <span>.</span><span>.</span><span>.</span>
+          </span>
+        </div>
+      `;
+      chatbox.appendChild(typingEl);
+      scrollChatToBottom();
+
+      try {
+        const response = await fetch("http://localhost:3000/api/chat", {
+          method: "POST",
+          headers: { "Content-Type": "application/json" },
+          body: JSON.stringify({ prompt: text, personality })
+        });
+
+        const data = await response.json();
+        typingEl.remove();
+
+        animateBotReply(data.reply || "Hmm... I didn’t understand that.");
+      } catch (err) {
+        typingEl.remove();
+        appendMessage("bot", "⚠️ Could not reach server.");
+      }
     }
 
-    function getBotResponse(input) {
-      const question = input.toLowerCase();
-      if (question.includes("hi") || question.includes("hello")) return "Hello there! 👋";
-      if (question.includes("who are you")) return "I'm Jessie, your helpful bot!";
-      if (question.includes("what can you do")) return "I can chat with you, log our convo, and learn more soon!";
-      return "I'm not sure how to respond to that yet.";
+    function clearChat() {
+      chatbox.innerHTML = "";
     }
 
-    // Press Enter to send
+    function toggleScroll() {
+      autoScroll = !autoScroll;
+      document.getElementById("scrollStatus").textContent = autoScroll ? "On" : "Off";
+    }
+
+    function changePersonality() {
+      personality = document.getElementById("personality").value;
+    }
+
     document.getElementById("userInput").addEventListener("keypress", function (e) {
       if (e.key === "Enter") sendMessage();
     });
+
+    const dropdownToggle = document.querySelector(".dropdown-toggle");
+    const dropdownContent = document.querySelector(".dropdown-content");
+
+    dropdownToggle.addEventListener("click", (e) => {
+      e.stopPropagation();
+      dropdownContent.style.display = dropdownContent.style.display === "block" ? "none" : "block";
+    });
+
+    dropdownContent.addEventListener("click", (e) => {
+      e.stopPropagation();
+    });
+
+    document.addEventListener("click", () => {
+      dropdownContent.style.display = "none";
+    });
+  </script>
+
+  <!-- ✅ SERVICE WORKER REGISTRATION -->
+  <script>
+    if ('serviceWorker' in navigator) {
+      window.addEventListener('load', () => {
+        navigator.serviceWorker.register('/service-worker.js')
+          .then(reg => console.log('✅ Service Worker registered', reg))
+          .catch(err => console.error('❌ Service Worker registration failed', err));
+      });
+    }
   </script>
 </body>
 </html>

@@ -1,30 +1,35 @@
+
 const functions = require("firebase-functions");
-const cors = require("cors")({ origin: true });
+const express = require("express");
+const cors = require("cors");
+require("dotenv").config();
 const { Configuration, OpenAIApi } = require("openai");
 
+const app = express();
+app.use(cors({ origin: true }));
+app.use(express.json());
+
 const configuration = new Configuration({
-  apiKey: functions.config().openai.key,
+  apiKey: process.env.OPENAI_API_KEY,
+});
+const openai = new OpenAIApi(configuration);
+
+app.post("/chat", async (req, res) => {
+  const userMessage = req.body.message;
+  if (!userMessage) {
+    return res.status(400).json({ error: "Missing message" });
+  }
+
+  try {
+    const completion = await openai.createChatCompletion({
+      model: "gpt-3.5-turbo",
+      messages: [{ role: "user", content: userMessage }],
+    });
+    res.json({ reply: completion.data.choices[0].message.content });
+  } catch (err) {
+    console.error("OpenAI Error:", err.response?.data || err.message);
+    res.status(500).json({ error: "Failed to generate reply" });
+  }
 });
 
-exports.chat = functions.https.onRequest((req, res) => {
-  cors(req, res, async () => {
-    if (req.method !== "POST") {
-      return res.status(405).send("Method Not Allowed");
-    }
-
-    const { prompt } = req.body;
-
-    try {
-      const completion = await openai.createChatCompletion({
-        model: "gpt-3.5-turbo",
-        messages: [{ role: "user", content: prompt }],
-      });
-
-      const botReply = completion.data.choices[0].message.content;
-      res.status(200).send({ reply: botReply });
-    } catch (error) {
-      console.error("OpenAI error:", error);
-      res.status(500).send({ reply: "Sorry, I had an error." });
-    }
-  });
-});
+exports.api = functions.https.onRequest(app);
