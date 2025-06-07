@@ -310,12 +310,11 @@
       scrollChatToBottom();
 
       try {
-        const response = await fetch("https://chatbot-backend-fzro.onrender.com", {
-          method: "POST",
-          headers: { "Content-Type": "application/json" },
-          body: JSON.stringify({ prompt: text, personality })
-        });
-
+const response = await fetch("https://chatbot-backend-fzro.onrender.com/api/chat", {
+  method: "POST",
+  headers: { "Content-Type": "application/json" },
+  body: JSON.stringify({ prompt: text, personality })
+});
         const data = await response.json();
         typingEl.remove();
 
